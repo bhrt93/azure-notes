@@ -1,0 +1,40 @@
+AZ-303 -- New Az Module COMMANDS
+
+Gives the Powershell version details
+$PSVersionTable.PSVersion
+
+Install Powershell module
+Install-Module -Name Az -AllowClobber -Scope CurrentUser
+
+Login to Azure
+Connect-AzAccount
+
+List Azure Subscriptions
+Get-AzSubscription
+
+Switch Azure Subscription
+$context = Get-AzSubscription -SubscriptionId 7add2343-234234-32423
+Set-AzContext $context
+
+Create A Resource Group
+New-AzResourceGroup -Name bk-res-grp-1 -Location EastUS
+// Get-AzResourceGroup
+// Delete-AzResourceGroup
+
+Create A VM
+New-AzVM -ResourceGroupName "bk-res-grp-1" -Name bk-vm-1 -Location EastUS -VirtualNetworkName "bk-vnet-1" -SubnetName "default" -SecurityGroupName "bk-nsg-1" -PublicIpAddressName "bk-ipaddr" -OpenPorts 80,443,3389
+--NOTE:This prompts for following
+Supply values for following paramters:
+Credential
+User:bk-user-1
+Password for user bk-user-1:********
+Watch for this in output
+ProvisioningStatus:Succeeded
+
+It creates a vnet if not present.
+It creates a network-security-group if not present.
+It creates a public-ip-address if not present.
+
+Start-AzVM -ResourceGroupName "bk-res-grp-1" -Name "bk-vm-1"
+Stop-AzVM -ResourceGroupName "bk-res-grp-1" -Name "bk-vm-1"
+
